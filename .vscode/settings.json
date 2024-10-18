@@ -1,0 +1,9 @@
+{
+  "eslint.format.enable": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.wordWrap": "on",
+  "editor.wordWrapColumn": 240,
+  "editor.autoClosingBrackets": "always",
+  "editor.autoClosingQuotes": "always",
+}

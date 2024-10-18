@@ -1,0 +1,148 @@
+export const fileExtensions: Record<string, string[]> = {
+  archives: ['.7z', '.bz2', '.dz', '.gz', '.lz', '.lzma', '.lzo', '.rar', '.rz', '.sz', '.tar.gz', '.tar', '.tgz', '.xz', '.z', '.zip'],
+  binaryFiles: ['.a', '.dll', '.dylib', '.exe', '.lib', '.o', '.obj', '.so'],
+  databaseFiles: ['.accdb', '.db', '.dbf', '.frm', '.ibd', '.mdb', '.sqlite'],
+  dotFiles: ['.dotfiles'],
+  javaFiles: ['.class', '.ear', '.jar', '.jpi', '.war'],
+  mediaFiles: [
+    '.aac',
+    '.avi',
+    '.flac',
+    '.gif',
+    '.jpeg',
+    '.jpg',
+    '.m4a',
+    '.mkv',
+    '.mov',
+    '.mp3',
+    '.mp4',
+    '.ogg',
+    '.png',
+    '.wav',
+    '.webm',
+    '.wmv'
+  ],
+  microsoftOfficeFiles: ['.doc', '.docx', '.odp', '.ods', '.odt', '.pdf', '.ppt', '.pptx', '.xls', '.xlsx'],
+  pythonFiles: ['.egg', '.pyc', '.pyd', '.pyo', '.whl'],
+  virtualMachineFiles: ['.iso', '.ova', '.ovf', '.qcow2', '.vdi', '.vhd', '.vhdx', '.vmdk'],
+  others: [
+    '.apk',
+    '.appimage',
+    '.appx',
+    '.aps',
+    '.bak',
+    '.bin',
+    '.bpl',
+    '.cab',
+    '.cer',
+    '.cfg',
+    '.conf',
+    '.config',
+    '.crt',
+    '.crx',
+    '.csr',
+    '.cur',
+    '.dat',
+    '.data',
+    '.dbg',
+    '.dcp',
+    '.dcpil',
+    '.dcu',
+    '.deb',
+    '.der',
+    '.dmg',
+    '.dmp',
+    '.drc',
+    '.DS_Store',
+    '.dump',
+    '.elf',
+    '.eot',
+    '.fla',
+    '.flatpak',
+    '.git',
+    '.gitignore',
+    '.gitkeep',
+    '.gpg',
+    '.icns',
+    '.ico',
+    '.idb',
+    '.ilk',
+    '.img',
+    '.ini',
+    '.jks',
+    '.key',
+    '.keystore',
+    '.ko',
+    '.localized',
+    '.lockb',
+    '.log',
+    '.msi',
+    '.msix',
+    '.msm',
+    '.msp',
+    '.msu',
+    '.nupkg',
+    '.otf',
+    '.p12',
+    '.p7b',
+    '.p7c',
+    '.pdb',
+    '.pem',
+    '.pfx',
+    '.pgp',
+    '.pkg',
+    '.prefs',
+    '.properties',
+    '.pub',
+    '.rc',
+    '.res',
+    '.resx',
+    '.rlib',
+    '.rpm',
+    '.rsrc',
+    '.sdf',
+    '.sig',
+    '.snap',
+    '.snupkg',
+    '.svg',
+    '.svn',
+    '.swc',
+    '.swf',
+    '.sys',
+    '.temp',
+    '.tlog',
+    '.tmp',
+    '.toast',
+    '.truststore',
+    '.ttf',
+    '.vcd',
+    '.woff',
+    '.woff2',
+    '.xpi',
+    'package-lock.json',
+    'spec',
+    'test'
+  ]
+}
+
+export const extensions: Record<string, string[] | RegExp> = {
+  ...fileExtensions,
+  dotFiles: /^\./
+}
+
+export function getExtensionsForType(type: string): string[] {
+  return fileExtensions[type] || []
+}
+
+export function shouldExclude(fileName: string, excludedTypes: string[]): boolean {
+  return excludedTypes.some((type) => {
+    if (type === 'dotFiles' && extensions.dotFiles instanceof RegExp) {
+      return extensions.dotFiles.test(fileName)
+    }
+    const typeExtensions = extensions[type]
+    if (Array.isArray(typeExtensions)) {
+      return typeExtensions.some((ext) => fileName.endsWith(ext))
+    }
+    return false
+  })
+}
